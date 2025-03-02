@@ -1,0 +1,39 @@
+<div class="d-flex align-items-center justify-content-between beautiful-deck-wrapper">
+  <span id="{{ html_id }}_wrapper">
+    <div class="d-flex justify-content-between align-items-center">
+      <input
+        type="text"
+        name="{{ name }}_text"
+        id="{{ html_id }}_text"
+        value=""
+        autocomplete="off"
+        {{ extra_attrs }}
+        class="form-control beautiful-deck-input"
+      />
+      {% if add_link %}
+      <a
+        href="{{ add_link }}"
+        class="btn beautiful-deck-add-button"
+        id="add_{{ html_id }}"
+        onclick="return showAddAnotherPopup(this);"
+      >
+      <img src="/static/admin/img/icon-addlink.svg" alt="Add">
+      </a> 
+      {% endif %}
+  </div>
+
+  <div id="{{html_id}}_on_deck" class="results_on_deck">
+    <div>{{current_repr|safe}}</div>
+  </div>
+
+  
+    <input
+      type="hidden"
+      name="{{ name }}"
+      id="{{ html_id }}"
+      value="{{ current_id }}"
+      data-ajax-select="autocompleteselect"
+      data-plugin-options="{{ data_plugin_options }}"
+    />
+  </span>
+</div>

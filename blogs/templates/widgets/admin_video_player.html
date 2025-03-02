@@ -1,0 +1,106 @@
+<!-- templates/widgets/admin_video_player.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player Preview</title>
+    <!-- Include Video.js CSS -->
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+
+    <!-- Include Video.js library -->
+    <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+
+    <style>
+        .video-preview-container {
+            display: flex;
+            flex-direction: row;
+        }
+        .box{
+            display :flex;
+            flex-direction: column;
+        }
+
+        .video-preview {
+            margin: 10px;
+        }
+
+        .video-player {
+            width: 300px;
+            height: 200px;
+        }
+
+        .language-tabs {
+            display: flex;
+        }
+
+        .language-tab {
+            cursor: pointer;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        .selected {
+            background-color: #6495ED;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+
+    <div class="language-tabs">
+        {% for language_code, _ in widget.videos.items %}
+            <div class="language-tab" onclick="showVideo('{{ language_code }}', this)">
+                {{ language_code }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="video-preview-container">
+        {% for language_code, video_url in widget.videos.items %}
+            <div class="video-preview" id="video-{{ language_code }}">
+                {% if video_url %}
+                    <video id="video-js-{{ language_code }}" class="video-js vjs-default-skin video-player" controls width="300" height="200">
+                        <source src="{{ video_url }}" type="application/x-mpegURL">
+                        Your browser does not support the video tag.
+                    </video>
+                    <script>
+                        // Initialize Video.js for each video element
+                        videojs("video-js-{{ language_code }}", {});
+                    </script>
+                {% else %}
+                    <p>No video available for {{ language_code }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+    <script>
+        function showVideo(languageCode, button) {
+            // Remove the 'selected' class from all language tabs
+            var tabs = document.querySelectorAll('.language-tab');
+            tabs.forEach(function(tab) {
+                tab.classList.remove('selected');
+            });
+
+            // Add the 'selected' class to the clicked language tab
+            button.classList.add('selected');
+
+            // Hide all videos
+            var videos = document.querySelectorAll('.video-preview');
+            videos.forEach(function(video) {
+                video.style.display = 'none';
+            });
+
+            // Show the selected video
+            var selectedVideo = document.getElementById('video-' + languageCode);
+            if (selectedVideo) {
+                selectedVideo.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

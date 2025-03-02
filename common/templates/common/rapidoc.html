@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rapidoc</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap"
+          rel="stylesheet">
+
+    <script src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
+    <style>
+        .tr {
+            padding: 5px 0 5px 0;
+        }
+
+        .m-markdown p:not(:first-child) {
+            margin-block-start: 10px;
+        }
+    </style>
+</head>
+<body>
+<rapi-doc
+        response-area-height="60vh"
+        spec-url="/swagger/schema/"
+        show-header=false
+        sort-tags=true
+        persist-auth=true
+        render-style="focused"
+        theme="light"
+        regular-font="'Manrope', sans-serif;"
+        font-size="large"
+        mono-font="JetBrains Mono, monospace;"
+        schema-description-expanded=true
+        show-method-in-nav-bar="as-colored-block"
+></rapi-doc>
+</body>
+</html>
