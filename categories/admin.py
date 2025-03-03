@@ -10,7 +10,7 @@ from treebeard.forms import movenodeform_factory
 
 from common.media_mixins import MediaMixin
 from common.utils import CustomizedFormFieldMixin
-from .models import Category, TrainingCategory
+from .models import Category
 
 
 class ArticleCountWidget(AdminTextInputWidget):

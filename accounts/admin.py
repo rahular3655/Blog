@@ -4,23 +4,12 @@ from django.db.models import Manager
 from django.utils.html import format_html
 
 from common.utils import CustomizedFormFieldMixin
-from ecommerce.address.models import UserAddress
 from .form import CustomUserChangeForm
 from .models import User, UserProfile, UserOTP, UserDevice, SupportRequest, ContactInformation
 
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
-    extra = 0
-    can_delete = False
-
-    def get_queryset(self, request):
-        qs = super().get_queryset(request=request)
-        return qs.prefetch_related('user')
-
-
-class UserAddressInline(admin.StackedInline):
-    model = UserAddress
     extra = 0
     can_delete = False
 
@@ -74,7 +63,7 @@ class UserModelAdmin(NonDeletedUserAdminMixin, CustomizedFormFieldMixin, admin.M
 
     exclude = ('password', 'change_email', 'change_contact_number',)
 
-    inlines = [UserProfileInline, UserOTPInline, UserAddressInline, UserDeviceInline]
+    inlines = [UserProfileInline, UserOTPInline, UserDeviceInline]
 
     search_fields = ('username', 'first_name', 'email',)
 
@@ -152,7 +141,7 @@ class AuthorModelAdmin(NonDeletedUserAdminMixin, CustomizedFormFieldMixin, admin
     list_display = ['username', 'email', 'is_active', 'is_author', 'is_deleted', 'blogs_count', 'courses_count', 'classes_count']
 
     exclude = (
-    'password', 'last_login', 'is_superuser', 'groups', 'user_permissions', 'is_staff', 'date_joined', 'change_email', 'change_contact_number',)
+        'password', 'last_login', 'is_superuser', 'groups', 'user_permissions', 'is_staff', 'date_joined', 'change_email', 'change_contact_number',)
 
     readonly_fields = ('blogs_count', 'courses_count', 'classes_count',)
 

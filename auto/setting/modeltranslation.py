@@ -14,4 +14,5 @@ MODELTRANSLATION_FALLBACK_LANGUAGES = ('en', 'ml', 'hi', 'zh-cn')
 MODELTRANSLATION_TRANSLATION_FILES = (
     'blogs.translation',
     'categories.translation',
+    'statictext.translation',
 )

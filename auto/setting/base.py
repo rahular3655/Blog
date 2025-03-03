@@ -72,7 +72,7 @@ INSTALLED_APPS.extend([
     'blogs',
     'categories',
     'tags',
-    'slideshow',
+    # 'slideshow',
     'statictext',
 ])
 
@@ -86,7 +86,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_user_agents.middleware.UserAgentMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    # 'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 USER_AGENTS_CACHE = 'default'
