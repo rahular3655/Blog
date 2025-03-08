@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
 
-from cloudflare.utils import get_video_url
+# from cloudflare.utils import get_video_url
 
 
 # Allow for a custom storage backend defined in settings.
@@ -58,5 +58,6 @@ def video_upload(request):
         if the_file.content_type not in allowed_types:
             return HttpResponse(json.dumps({'error': _('You can only upload videos.')}), content_type="application/json")
 
-        link = get_video_url(the_file)
+        # link = get_video_url(the_file)
+        link = the_file
         return HttpResponse(json.dumps({'link': link}), content_type="application/json")

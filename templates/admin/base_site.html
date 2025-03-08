@@ -1,0 +1,44 @@
+{% extends "admin/base.html" %}
+{% load static baton_tags %}
+{% load i18n %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock title %}
+
+{% block extrahead %}
+    {% baton_config as conf %}
+    {{ conf | json_script:"baton-config" }}
+    <script charset="utf-8">
+        (function () {
+            // immediately set the theme mode to avoid flashes
+            var systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+            var theme = JSON.parse(document.getElementById('baton-config').textContent).forceTheme || localStorage.getItem('baton-theme') || (systemTheme.matches ? 'dark' : 'light');
+            document.getElementsByTagName('html')[0].setAttribute('data-bs-theme', theme);
+        })()
+    </script>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="{% static 'baton/app/dist/baton.min.js' %}"></script>
+     {% comment %} <script src="{{base_domain}}/common/static/baton/app/dist/baton.min.js"></script>  {% endcomment %}
+    <script src="{% static 'baton/js_snippets/init_baton.js' %}"></script>
+{% endblock extrahead %}
+
+{% block branding %}
+<div class="baton-startup-overlay"></div>
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock branding %}
+
+{% block nav-global %}{% endblock nav-global %}
+
+{% block footer %}
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+        })
+
+        var popover = new bootstrap.Popover(document.querySelector('.example-popover'), {
+            container: 'body'
+          })
+
+    </script>
+    {% footer %}
+{% endblock footer %}

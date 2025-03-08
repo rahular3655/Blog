@@ -12,11 +12,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
-from social_django.models import UserSocialAuth
 
 from accounts.models import SupportRequest
 from accounts.models import User, UserProfile, UserOTP
-from accounts.serializers.users import GoogleSocialAuthSerializer
 from accounts.serializers.profile import UserDetailSerializer, UserUpdateSerializer, UserProfileImageSerializer, \
     ChangePasswordSerializer, EmailUpdateSerializer, EmailVerifyOTPSerializer, ContactNumberUpdateSerializer, \
     ContactNumberVerifyOTPSerializer, CreateSupportRequestSerializer, SupportRequestSerializer, CreateContactInformationSerializer
@@ -282,34 +280,3 @@ class ContactNumberVerificationView(APIView):
         return Response(data=resp_serializer.data, status=status.HTTP_200_OK)
 
 
-@extend_schema(tags=["Social - Login"], summary="Check login Using social auth or not")
-class CheckUserSocialAuth(RetrieveAPIView):
-    """ 
-    This API check user login using social auth or not
-    """
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, *args, **kwargs):
-        queryset = UserSocialAuth.objects.filter(user_id=request.user.id).exists()
-        return Response(queryset)
-
-
-@extend_schema(tags=["Social - Login- Mobile"], summary="Social Login Mobile", request=GoogleSocialAuthSerializer)
-class GoogleSocialAuthView(GenericAPIView):
-
-    serializer_class = GoogleSocialAuthSerializer
-
-    def post(self, request):
-        """
-
-        POST with "auth_token"
-
-        Send an idtoken as from google to get user information
-
-        """
-
-        serializer = self.serializer_class(data=request.data,context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        data = ((serializer.validated_data)['auth_token'])
-        return Response(data, status=status.HTTP_200_OK)

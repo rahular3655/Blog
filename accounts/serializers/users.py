@@ -17,10 +17,8 @@ from rest_framework import serializers
 
 from accounts.models import User, UserProfile, UserOTP
 
-from accounts.google import Google
 from rest_framework.exceptions import AuthenticationFailed
 import os
-from accounts.register import register_social_user
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -427,25 +425,3 @@ class SoftDeleteSerializer(serializers.Serializer):
         instance.save()
 
         return instance
-
-
-class GoogleSocialAuthSerializer(serializers.Serializer):
-    auth_token = serializers.CharField()
-
-    def validate_auth_token(self, auth_token):
-        user_data = Google.validate(auth_token)
-        user_request = self.context['request']
-
-        try:
-            user_data['sub']
-        except:
-            raise serializers.ValidationError(
-                'The token is invalid or expired. Please login again.'
-            )
-
-        GOOGLE_CLIENT_ID = settings.GOOGLE_CLIENT_ID
-
-        if user_data['aud'] != GOOGLE_CLIENT_ID:
-            raise AuthenticationFailed('oops, who are you?')
-
-        return register_social_user(user_data=user_data, user_request=user_request)
