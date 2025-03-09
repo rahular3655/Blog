@@ -2,7 +2,7 @@ from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from common.serializers import ImageSerializer
-from .models import Category, TrainingCategory
+from .models import Category
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -11,22 +11,6 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'name', 'slug', 'image', 'alt_text', 'description')
-
-    @extend_schema_field(field=ImageSerializer)
-    def get_image(self, obj):
-        if obj.image:
-            requests = self.context.get('request')
-            if requests:
-                return ImageSerializer(obj.image, context={'request': requests}).data
-        return None
-
-
-class TrainingCategorySerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
-
-    class Meta:
-        model = TrainingCategory
-        fields = ('id', 'name', 'slug', 'description', 'image', 'alt_text',)
 
     @extend_schema_field(field=ImageSerializer)
     def get_image(self, obj):

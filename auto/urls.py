@@ -31,6 +31,7 @@ urlpatterns = [
     path('admin/defender/', include('defender.urls')),
     path("admin/lookups/", include(ajax_select_urls)),
     path('admin/', admin.site.urls),
+    path('baton/', include('baton.urls')),
 
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('categories/', include('categories.urls')),

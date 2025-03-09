@@ -1,5 +1,5 @@
 from django.urls import path
-from common.views import LanguageListView, GlobalSearchViewAPI, redirect_to_oscar_index
+from common.views import LanguageListView, GlobalSearchViewAPI
 
 app_name = "common"
 

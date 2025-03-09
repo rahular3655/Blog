@@ -17,7 +17,6 @@ from decouple import config, Csv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -39,6 +38,7 @@ INTERNAL_IPS = [
 
 INSTALLED_APPS = [
     'common',
+    'baton',
     'django_dramatiq',
     'modeltranslation',
     'django.contrib.admin',
@@ -64,7 +64,9 @@ INSTALLED_APPS = [
     'dbbackup',
     'defender',
     'ajax_select',
+    'baton.autodiscover',
     'silk',
+
 ]
 
 INSTALLED_APPS.extend([
@@ -107,14 +109,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'common.context_processors.base_domain', # custom context processor to pass base domain to html.
+                'common.context_processors.base_domain',  # custom context processor to pass base domain to html.
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'auto.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -131,7 +132,6 @@ DATABASES = {
         'PORT': '5432'
     },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -180,7 +180,6 @@ USE_L10N = True
 USE_TZ = True
 
 BASE_DOMAIN = config('BASE_DOMAIN', cast=str)
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
