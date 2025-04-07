@@ -85,92 +85,13 @@ class User(LifecycleModelMixin, AbstractUser):
     def update_is_contact_number_verified(self):
         self.is_contact_number_verified = True
 
-    # @hook(AFTER_CREATE, when_any=['is_superuser', 'is_staff'], is_now=False, priority=3)
-    # def send_verification_email(self):
-    #     if (self.is_superuser is False) and (self.is_staff is False):
-    #         message = render_to_string(
-    #             template_name="email/signup.html",
-    #             context=dict(
-    #                 subject="Hello from kalpafit. Please verify your email",
-    #                 user=self.username,
-    #                 otp=self.otp.otp,
-    #                 domain=settings.BASE_DOMAIN
-    #             )
-    #         )
-    #         send_email(
-    #             from_email=settings.DEFAULT_FROM_EMAIL,
-    #             to_email=[self.email],
-    #             subject="Hello from kalpafit. Please verify your email",
-    #             message=message
-    #         )
-    #
-    # def send_verification_link(self):
-    #     """
-    #     Method to sent verification link to users email upon support request, from admin panel.
-    #     """
-    #     verification_url = self.generate_verification_url()
-    #     message = render_to_string(
-    #         template_name="email/verify.html",
-    #         context=dict(
-    #             subject="Hello from kalpafit. Please verify your email.",
-    #             user=self.username,
-    #             verification_url=verification_url,
-    #             domain=settings.BASE_DOMAIN
-    #         )
-    #     )
-    #     send_email(
-    #         from_email=settings.DEFAULT_FROM_EMAIL,
-    #         to_email=[self.email],
-    #         subject="Hello from kalpafit. Please verify your email",
-    #         message=message
-    #     )
+   
 
     def generate_verification_url(self):
         verification_path = reverse('accounts:verify_email', kwargs={'slug': self.slug})
         return f"{settings.BASE_DOMAIN}{verification_path}"
 
-    # @hook(AFTER_UPDATE, when="change_email", has_changed=True, is_not=None)
-    # def send_verification_to_update_email(self):
-    #     """
-    #     Method to sent verification OTP to new email.
-    #     """
-    #     message = render_to_string(
-    #         template_name="email/change_email.html",
-    #         context=dict(
-    #             subject="Hello from kalpafit. Please verify your email",
-    #             user=self.username,
-    #             otp=self.otp.otp,
-    #             domain=settings.BASE_DOMAIN
-    #         )
-    #     )
-    #     send_email(
-    #         from_email=settings.DEFAULT_FROM_EMAIL,
-    #         to_email=str(self.change_email),
-    #         subject="Hello from Blogs.com. Please verify your email",
-    #         message=message
-    #     )
-    #
-    # @hook(AFTER_UPDATE, when="change_email", has_changed=True, is_not=None)
-    # def send_confirmation_email(self):
-    #     """
-    #     Method to sent confirmation email to the registered mail-id about email changing request.
-    #     """
-    #     message = render_to_string(
-    #         template_name="email/change_email_confirmation.html",
-    #         context=dict(
-    #             subject="Hello from kalpafit. Email Address Change Confirmation",
-    #             user=self.username,
-    #             otp=self.otp.otp,
-    #             domain=settings.BASE_DOMAIN,
-    #             new_email=self.change_email
-    #         )
-    #     )
-    #     send_email(
-    #         from_email=settings.DEFAULT_FROM_EMAIL,
-    #         to_email=str(self.email),
-    #         subject="Hello from kalpafit. Email Address Change Confirmation",
-    #         message=message
-    #     )
+   
 
     def get_country_code(self):
         # Parse the phone number
